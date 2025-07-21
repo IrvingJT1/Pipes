@@ -1,0 +1,132 @@
+<section class="mx-5 mb-5">
+  <h1 class="text-2xl font-bold">Pipes no tan comunes</h1>
+  <h3 class="text-xl font-thin">Pipes incluidos en Angular</h3>
+
+</section>
+
+<!-- 
+    Se usa el signal client para obtener el género, de ahi se aplica el pipe i18nSelect 
+    que debe recibir como parámetro el mapeo de invitación definido en el achivo ts
+    acorde al valor que corresponda al género del cliente en automático se asociará la palabra
+    que corresponde ya sea "invitarlo" o "invitarla"
+-->
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <app-card title="i18nSelectPipe">
+        <p>
+            Saludos {{ client().name }} es un placer {{ client().gender | i18nSelect: invitationMap }} a nuestro evento
+        </p>
+        <button class="btn btn-primary" (click)="changeClient()">
+            Cambiar cliente
+        </button>
+    </app-card>
+
+    <app-card title="i18nPluralPipe">
+        <p>
+            Actualmente {{ clients().length | i18nPlural: clientsMap() }}
+        </p>
+        <button 
+        [disabled]="clients().length === 0"
+        class="btn btn-primary" 
+        (click)="deleteClient()"
+        
+        >
+            Borrar cliente de esta lista de espera
+        </button>
+    </app-card>
+
+    <app-card title="SlicePipe">
+        <b>Original</b>
+        <p class="text-primary">
+            {{ clients().join(", ")}}
+        </p>
+
+        <b>Slice:0:2</b>
+        <p class="text-primary">
+            {{ clients() | slice:0:2}}
+        </p>
+
+        <b>Slice:1:2</b>
+        <p class="text-primary">
+            {{ clients() | slice:1:2}}
+        </p>
+
+        <b>Slice:1:3</b>
+        <p class="text-primary">
+            {{ clients() | slice:1:3}}
+        </p>
+
+        <b>Slice:3:4</b>
+        <p class="text-primary">
+            {{ clients() | slice:3:4}}
+        </p>
+
+        <b>Slice:0:-3</b>
+        <p class="text-primary">
+            {{ clients() | slice:0:-3}}
+        </p>
+    </app-card>
+
+    <app-card title="JsonPipe">
+        
+        <pre class="text-primary">
+            {{ clients() | json }}
+        </pre>
+        <pre class="text-primary">
+            {{ client() | json}}
+        </pre>
+        <p class="text-primary">
+            {{ clients().join(", ") | json | uppercase }}
+        </p>
+
+    </app-card>
+
+    <app-card title="KeyValuePipe">
+        
+        <!-- <pre>{{ profile | keyvalue | json}}</pre> -->
+        <!-- 
+            keyvalue pipe se usa para poder mostrar elementos de un objeto de manera visual,
+            como un objeto no es un elemento iterable, lo que hace este pipe simular que cada elemento llave:valor
+            es parte de un elemento iterable de manera que se puede realizar un recorrido a través del objeto 
+            cuya información se quiere visualizar, de esta manera, la simulación ayuda a que se pueda usar un ciclo for
+            para recorrer el objeto y mostrar la información como es requerida
+
+            NOTA.- Es muy útil para recorrer objetos Set y Map
+
+        -->
+        <ul>
+            @for (item of profile | keyvalue; track $index) {
+                <li>
+                    <span class="text-primary">
+                       <strong>{{ item.key | titlecase }}: </strong>
+                    </span>
+                    {{ item.value }}
+                </li>
+            }
+        </ul>
+
+    </app-card>
+    <app-card title="AsyncPipe">
+        <p>
+            {{promiseValue | async}}
+        </p>
+
+        @if( promiseValue | async; as value)
+        {
+            <p class="text-primary">{{ value }}</p>
+        }@else {
+            <p class="text-accent">Espere por favor...</p>
+        }
+
+        <!--  -->
+        <h3>Observable</h3>
+        <p>{{ myObservableTimer | async }}</p>
+
+        @if( myObservableTimer | async; as value ){
+            <p>Valor: {{ value }}</p>
+        }
+        @else {
+            <p>Esperando primer valor</p>
+        }
+    </app-card>
+</div>

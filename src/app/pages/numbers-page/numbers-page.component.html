@@ -1,0 +1,38 @@
+
+<section class="mx-5 my-5">
+  <h1 class="text-2xl font-bold">Pipes numéricos</h1>
+  <h3 class="text-xl font-thin">Pipes incluidos en Angular</h3>
+
+</section>
+
+<!--
+El primer formato de decimalPipe como number indica que se toma en cuenta el número y se requieren de 2 a 2 decimales
+o sea, siempre debe haber 2 decimales mostrados, si el número tiene más decimales se hace el redondeo a 2 (1.2-2)
+
+-->
+
+<div class="stats stats-vertical lg:stats-horizontal shadow w-full">
+  <div class="stat">
+    <div class="stat-title">Number</div>
+    <div class="stat-value">{{ totalSells() | number:'1.2-2'}}</div>
+    <div class="stat-desc">{{ totalSells() }}</div>
+  </div>
+
+   <div class="stat">
+    <div class="stat-title">Number</div>
+    <div class="stat-value">{{ totalSells() + 1234 | number:'1.1-2'}}</div>
+    <div class="stat-desc">{{ totalSells() }}</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-title">Currency</div>
+    <div class="stat-value">{{ totalSells()  | currency: 'CAD': 'symbol-narrow': '1.4-4'}}</div>
+    <div class="stat-desc">↗︎ {{ totalSells() }}</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-title">Percent</div>
+    <div class="stat-value">{{ percent() | percent: '1.2-2' }}</div>
+    <div class="stat-desc">{{ percent() }}</div>
+  </div>
+</div>
